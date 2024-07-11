@@ -13,7 +13,6 @@ public class PlayerManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
-
         playerController = GetComponent<PlayerController>();
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -52,6 +51,7 @@ public class PlayerManager : CharacterManager
         {
             PlayerCamera.instance.player = this;
             PlayerInputManager.instance.player = this;
+            WorldSaveGameManager.instance.player = this;
 
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
@@ -60,5 +60,22 @@ public class PlayerManager : CharacterManager
             playerNetworkManager.currentStamina.Value = playerStatsManager.CalculateStaminaBasedOnLvl(playerNetworkManager.vitality.Value);
             PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
         }
+    }
+
+    public void SaveToCharacterData(ref CharacterSaveData currentSaveData)
+    {
+        currentSaveData.characterName = playerNetworkManager.characterName.Value.ToString();
+
+        currentSaveData.xPosition = transform.position.x;
+        currentSaveData.yPosition = transform.position.y;
+        currentSaveData.yPosition = transform.position.z;
+    }
+
+    public void LoadToCharacterData(ref CharacterSaveData currentSaveData)
+    {
+        playerNetworkManager.characterName.Value = currentSaveData.characterName;
+
+        Vector3 currentPosition = new Vector3(currentSaveData.xPosition, currentSaveData.yPosition, currentSaveData.zPosition);
+        transform.position = currentPosition;
     }
 }

@@ -44,4 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91c679c12d9c3264bbf8040a30a4e4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  saveGame: 0
+  loadGame: 0
   worldSceneIndex: 1
+  currentSaveSlotBeingUsed: 0
+  currentCharacterData:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
+  saveSlot01:
+    characterName: 
+    secondsPlayed: 0
+    xPosition: 0
+    yPosition: 0
+    zPosition: 0
