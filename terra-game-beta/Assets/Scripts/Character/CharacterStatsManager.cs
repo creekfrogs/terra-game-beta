@@ -17,6 +17,17 @@ public class CharacterStatsManager : MonoBehaviour
         character = GetComponent<CharacterManager>();
     }
 
+    protected virtual void Start()
+    {
+
+    }
+
+    public int CalculateHealthBasedOnLvl(int essence)
+    {
+        float health = essence * 15;
+        return Mathf.RoundToInt(health);
+    }
+
     public int CalculateStaminaBasedOnLvl(int vitality)
     {
         float stamina = vitality * 10;

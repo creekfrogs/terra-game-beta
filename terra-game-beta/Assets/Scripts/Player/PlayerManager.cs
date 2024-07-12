@@ -53,12 +53,12 @@ public class PlayerManager : CharacterManager
             PlayerInputManager.instance.player = this;
             WorldSaveGameManager.instance.player = this;
 
+            playerNetworkManager.essence.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue;
+            playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxStaminaValue;
+
+            playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
-
-            playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnLvl(playerNetworkManager.vitality.Value);
-            playerNetworkManager.currentStamina.Value = playerStatsManager.CalculateStaminaBasedOnLvl(playerNetworkManager.vitality.Value);
-            PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
         }
     }
 
@@ -68,7 +68,17 @@ public class PlayerManager : CharacterManager
 
         currentSaveData.xPosition = transform.position.x;
         currentSaveData.yPosition = transform.position.y;
-        currentSaveData.yPosition = transform.position.z;
+        currentSaveData.zPosition = transform.position.z;
+
+        currentSaveData.currentHealth = playerNetworkManager.currentHealth.Value;
+        currentSaveData.currentStamina = playerNetworkManager.currentStamina.Value;
+
+        currentSaveData.essence = playerNetworkManager.essence.Value;
+        currentSaveData.vitality = playerNetworkManager.vitality.Value;
+        currentSaveData.force = playerNetworkManager.force.Value;
+        currentSaveData.finesse = playerNetworkManager.finesse.Value;
+        currentSaveData.focus = playerNetworkManager.focus.Value;
+        currentSaveData.precision = playerNetworkManager.precision.Value;
     }
 
     public void LoadToCharacterData(ref CharacterSaveData currentSaveData)
@@ -77,5 +87,21 @@ public class PlayerManager : CharacterManager
 
         Vector3 currentPosition = new Vector3(currentSaveData.xPosition, currentSaveData.yPosition, currentSaveData.zPosition);
         transform.position = currentPosition;
+
+        playerNetworkManager.currentHealth.Value = currentSaveData.currentHealth;
+        playerNetworkManager.currentStamina.Value = currentSaveData.currentStamina;
+
+        playerNetworkManager.essence.Value = currentSaveData.essence;
+        playerNetworkManager.vitality.Value = currentSaveData.vitality;
+        playerNetworkManager.force.Value = currentSaveData.force;
+        playerNetworkManager.finesse.Value = currentSaveData.finesse;
+        playerNetworkManager.focus.Value = currentSaveData.focus;
+        playerNetworkManager.precision.Value = currentSaveData.precision;
+
+        playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnLvl(currentSaveData.essence);
+        playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnLvl(currentSaveData.vitality);
+        playerNetworkManager.currentHealth.Value = currentSaveData.currentHealth;
+        playerNetworkManager.currentStamina.Value = currentSaveData.currentStamina;
+        PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
     }
 }

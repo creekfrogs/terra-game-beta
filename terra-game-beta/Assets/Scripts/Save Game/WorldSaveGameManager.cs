@@ -90,65 +90,70 @@ public class WorldSaveGameManager : MonoBehaviour
         return fileName;
     }
 
-    public void NewGame()
+    public void AttemptNewGame()
     {
         saveFileWriter = new SaveFileWriter();
         saveFileWriter.saveDataDir = Application.persistentDataPath;
 
         
         saveFileWriter.saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_01);
-        Debug.Log(saveFileWriter.saveFileName);
-        Debug.Log((File.Exists(Path.Combine(Application.persistentDataPath, saveFileWriter.saveFileName))));
+
 
         if (!saveFileWriter.CheckIfFileExists())
         {
             currentSaveSlotBeingUsed = SaveSlot.SaveSlot_01;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorld());
+            NewGame();
             return;
         }
 
-        saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_02);
+        saveFileWriter.saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_02);
 
         if (!saveFileWriter.CheckIfFileExists())
         {
             currentSaveSlotBeingUsed = SaveSlot.SaveSlot_02;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorld());
+            NewGame();
             return;
         }
 
-        saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_03);
+        saveFileWriter.saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_03);
 
         if (!saveFileWriter.CheckIfFileExists())
         {
             currentSaveSlotBeingUsed = SaveSlot.SaveSlot_03;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorld());
+            NewGame();
             return;
         }
 
-        saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_04);
+        saveFileWriter.saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_04);
 
         if (!saveFileWriter.CheckIfFileExists())
         {
             currentSaveSlotBeingUsed = SaveSlot.SaveSlot_04;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorld());
+            NewGame();
             return;
         }
 
-        saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_05);
+        saveFileWriter.saveFileName = DecideFileNameBasedOnSaveSlot(SaveSlot.SaveSlot_05);
 
         if (!saveFileWriter.CheckIfFileExists())
         {
             currentSaveSlotBeingUsed = SaveSlot.SaveSlot_05;
             currentCharacterData = new CharacterSaveData();
-            StartCoroutine(LoadWorld());
+            NewGame();
             return;
         }
 
         TitleScreenManager.instance.DisplayNoSlotMessage();
+    }
+
+    private void NewGame()
+    {
+        SaveGame();
+        StartCoroutine(LoadWorld());
     }
 
     public void LoadGame()
@@ -162,6 +167,16 @@ public class WorldSaveGameManager : MonoBehaviour
         currentCharacterData = saveFileWriter.LoadSaveFile();
 
         StartCoroutine(LoadWorld());
+    }
+
+    public void DeleteGame(SaveSlot saveSlot)
+    {
+        saveFileWriter = new SaveFileWriter();
+        saveFileWriter.saveDataDir = Application.persistentDataPath;
+        saveFileWriter.saveFileName = saveFileName;
+        saveFileWriter.saveFileName = DecideFileNameBasedOnSaveSlot(saveSlot);
+
+        saveFileWriter.DeleteSaveFile();
     }
 
     public void SaveGame()

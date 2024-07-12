@@ -13,5 +13,6 @@ public enum SaveSlot
     SaveSlot_02,
     SaveSlot_03,
     SaveSlot_04,
-    SaveSlot_05
+    SaveSlot_05,
+    NO_SLOT
 }

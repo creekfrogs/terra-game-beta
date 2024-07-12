@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class PlayerStatsManager : CharacterStatsManager
 {
-    // Start is called before the first frame update
-    void Start()
+    PlayerManager player;
+    protected override void Awake()
     {
-        
+        base.Awake();
+
+        player = GetComponent<PlayerManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Start()
     {
-        
+        base.Start();
+
+        CalculateHealthBasedOnLvl(player.playerNetworkManager.essence.Value);
+        CalculateStaminaBasedOnLvl(player.playerNetworkManager.vitality.Value);
     }
 }

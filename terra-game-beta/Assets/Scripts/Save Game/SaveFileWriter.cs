@@ -23,7 +23,9 @@ public class SaveFileWriter
 
     public void DeleteSaveFile()
     {
-        File.Delete(Path.Combine(saveDataDir, saveFileName));
+        string deletePath = Path.Combine(saveDataDir, saveFileName);
+        Debug.Log("DELETING SAVE FILE AT: " + deletePath);
+        File.Delete(deletePath);
     }
 
     public void InitializeSaveFile(CharacterSaveData characterData)

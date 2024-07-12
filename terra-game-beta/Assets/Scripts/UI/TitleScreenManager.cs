@@ -10,7 +10,7 @@ public class TitleScreenManager : MonoBehaviour
 
     [Header("Menus")]
     [SerializeField] GameObject titleScreenMainMenu;
-    [SerializeField] GameObject loadCharacterMenu;
+    [SerializeField] GameObject loadSaveMenu;
 
     [Header("Buttons")]
     [SerializeField] Button mainMenuLoadGameButton;
@@ -19,7 +19,13 @@ public class TitleScreenManager : MonoBehaviour
     [Header("Pop Ups")]
     [SerializeField] GameObject noSlotPopUp;
     [SerializeField] Button noSlotOKButton;
+    [SerializeField] GameObject deleteSlotPopUp;
+    [SerializeField] Button deleteSlotYESButton;
+    [SerializeField] Button deleteSlotNOButton;
 
+    [Header("Save Slots")]
+    public SaveSlot currentSaveSlot = SaveSlot.NO_SLOT;
+    
     private void Awake()
     {
         if(instance == null)
@@ -38,20 +44,20 @@ public class TitleScreenManager : MonoBehaviour
 
     public void StartNewGame()
     {
-        WorldSaveGameManager.instance.NewGame();
+        WorldSaveGameManager.instance.AttemptNewGame();
     }
 
     public void OpenLoadGameMenu()
     {
         titleScreenMainMenu.SetActive(false);
-        loadCharacterMenu.SetActive(true);
+        loadSaveMenu.SetActive(true);
         loadMenuReturnButton.Select();
     }
 
     public void CloseLoadGameMenu()
     {
         titleScreenMainMenu.SetActive(true);
-        loadCharacterMenu.SetActive(false);
+        loadSaveMenu.SetActive(false);
         mainMenuLoadGameButton.Select();
     }
 
@@ -59,5 +65,33 @@ public class TitleScreenManager : MonoBehaviour
     {
         noSlotPopUp.SetActive(true);
         noSlotOKButton.Select();
+    }
+
+    public void SelectSaveSlot(SaveSlot saveSlot)
+    {
+        currentSaveSlot = saveSlot;
+    }
+
+    public void SelectNoSlot()
+    {
+        currentSaveSlot = SaveSlot.NO_SLOT;
+    }
+
+    public void AttemptDeleteSlot()
+    {
+        if(currentSaveSlot != SaveSlot.NO_SLOT)
+        {
+            deleteSlotPopUp.SetActive(true);
+            deleteSlotNOButton.Select();
+        }
+    }
+
+    public void DeleteCharacterSlot()
+    {
+        deleteSlotPopUp.SetActive(false);
+        WorldSaveGameManager.instance.DeleteGame(currentSaveSlot);
+        loadSaveMenu.SetActive(false);
+        loadSaveMenu.SetActive(true);
+        loadMenuReturnButton.Select();
     }
 }
