@@ -16,7 +16,7 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public void UpdateAnimatorMovementParams(float horizontal, float vertical)
     {
-        if (character._animator != null)
+        if (character.characterAnimator != null)
         {
             float snappedHorizontal = 0;
             float snappedVertical = 0;
@@ -67,8 +67,8 @@ public class CharacterAnimatorManager : MonoBehaviour
             }
             #endregion
 
-            character._animator.SetFloat("horizontal", snappedHorizontal, 0.05f, Time.deltaTime);
-            character._animator.SetFloat("vertical", snappedVertical, 0.05f, Time.deltaTime);
+            character.characterAnimator.SetFloat("horizontal", snappedHorizontal, 0.05f, Time.deltaTime);
+            character.characterAnimator.SetFloat("vertical", snappedVertical, 0.05f, Time.deltaTime);
         }
     }
 }

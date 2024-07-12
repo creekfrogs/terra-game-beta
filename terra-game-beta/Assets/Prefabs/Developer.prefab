@@ -1691,7 +1691,8 @@ GameObject:
   - component: {fileID: 522726968840725516}
   - component: {fileID: 6682143898614519866}
   - component: {fileID: 7598583938741578291}
-  m_Layer: 0
+  - component: {fileID: 102807777637870704}
+  m_Layer: 6
   m_Name: Developer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1798,7 +1799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
+  GlobalObjectIdHash: 1675706309
+  InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -1818,9 +1820,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ecf93f05b20d8d47a0ea06efeb8eb52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead:
+    m_InternalValue: 0
   characterNetworkManager: {fileID: 0}
-  _rigidbody: {fileID: 0}
-  _animator: {fileID: 0}
+  characterEffectsManager: {fileID: 0}
+  characterRigidbody: {fileID: 0}
+  characterAnimator: {fileID: 0}
   playerController: {fileID: 0}
   playerAnimatorManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
@@ -1841,6 +1846,7 @@ MonoBehaviour:
   rotationSpeed: 15
   walkingSpeed: 2
   runningSpeed: 5
+  state: 0
 --- !u!114 &522726968840725516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1906,6 +1912,75 @@ MonoBehaviour:
     m_InternalValue: 0
   maxAdrenaline:
     m_InternalValue: 0
+  characterName:
+    m_InternalValue:
+      utf8LengthInBytes: 9
+      bytes:
+        offset0000:
+          byte0000: 67
+          byte0001: 104
+          byte0002: 97
+          byte0003: 114
+          byte0004: 97
+          byte0005: 99
+          byte0006: 116
+          byte0007: 101
+          byte0008: 114
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0016:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        offset0032:
+          byte0000: 0
+          byte0001: 0
+          byte0002: 0
+          byte0003: 0
+          byte0004: 0
+          byte0005: 0
+          byte0006: 0
+          byte0007: 0
+          byte0008: 0
+          byte0009: 0
+          byte0010: 0
+          byte0011: 0
+          byte0012: 0
+          byte0013: 0
+          byte0014: 0
+          byte0015: 0
+        byte0048: 0
+        byte0049: 0
+        byte0050: 0
+        byte0051: 0
+        byte0052: 0
+        byte0053: 0
+        byte0054: 0
+        byte0055: 0
+        byte0056: 0
+        byte0057: 0
+        byte0058: 0
+        byte0059: 0
+        byte0060: 0
+        byte0061: 0
 --- !u!114 &7598583938741578291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,6 +1995,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   staminaRegenerationDelay: 2
   staminaRegenerationAmount: 2
+--- !u!114 &102807777637870704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7824235032711180999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2ceaa2f6b60c3f45b464aa75419ad09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToTest: {fileID: 11400000, guid: 6f94bf56cdc6626428e9b4aa5e2a980f, type: 2}
+  processEffect: 0
 --- !u!1 &8106162223459906683
 GameObject:
   m_ObjectHideFlags: 0

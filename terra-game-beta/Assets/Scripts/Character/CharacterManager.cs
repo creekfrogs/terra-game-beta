@@ -5,17 +5,21 @@ using Unity.Netcode;
 
 public class CharacterManager : NetworkBehaviour
 {
+    [Header("Status")]
+    public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
-    [HideInInspector] public Rigidbody _rigidbody;
-    [HideInInspector] public Animator _animator;
+    [HideInInspector] public CharacterEffectsManager characterEffectsManager;
+    [HideInInspector] public Rigidbody characterRigidbody;
+    [HideInInspector] public Animator characterAnimator;
 
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
 
+        characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
-        _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
+        characterRigidbody = GetComponent<Rigidbody>();
+        characterAnimator = GetComponent<Animator>();
     }
 
     protected virtual void Update()

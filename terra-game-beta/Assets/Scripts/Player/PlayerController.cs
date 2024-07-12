@@ -20,6 +20,16 @@ public class PlayerController : CharacterController
     [SerializeField] float walkingSpeed = 2;
     [SerializeField] float runningSpeed = 5;
 
+    [Header("Player Movement State")]
+    public PlayerMoveState state;
+    public enum PlayerMoveState
+    {
+        idle,
+        walking,
+        running,
+        backwards,
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -48,8 +58,9 @@ public class PlayerController : CharacterController
     }
     public void HandleAllMovement()
     {
-        HandleGroundedMovement();
+        StateMachine();
 
+        HandleGroundedMovement();
         HandleRotation();
     }
 
@@ -86,13 +97,37 @@ public class PlayerController : CharacterController
         Vector3 targetDirection = Vector3.zero;
         targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
         targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-        targetDirection.Normalize();
-        targetDirection.y = 0;
+        
 
         if (targetDirection == Vector3.zero)
             targetDirection = transform.forward;
 
+        if (state == PlayerMoveState.backwards)
+            targetDirection = PlayerCamera.instance.cameraObject.transform.forward;
+
+        targetDirection.Normalize();
+        targetDirection.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void StateMachine()
+    {
+        if (verticalMovement < 0)
+        {
+            state = PlayerMoveState.backwards;
+        }
+        else if (moveAmount > 0.5 && moveAmount <= 1)
+        {
+            state = PlayerMoveState.running;
+        }
+        else if (moveAmount > 0 && moveAmount <= 0.5f)
+        {
+            state = PlayerMoveState.walking;
+        }
+        else
+        {
+            state = PlayerMoveState.idle;
+        }
     }
 }

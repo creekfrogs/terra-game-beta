@@ -19,7 +19,7 @@ public class CharacterStatsManager : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        
     }
 
     public int CalculateHealthBasedOnLvl(int essence)
