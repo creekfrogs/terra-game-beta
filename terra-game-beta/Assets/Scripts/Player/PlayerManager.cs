@@ -100,8 +100,7 @@ public class PlayerManager : CharacterManager
 
         playerNetworkManager.maxHealth.Value = playerStatsManager.CalculateHealthBasedOnLvl(currentSaveData.essence);
         playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnLvl(currentSaveData.vitality);
-        playerNetworkManager.currentHealth.Value = currentSaveData.currentHealth;
-        playerNetworkManager.currentStamina.Value = currentSaveData.currentStamina;
+        PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
     }
 }

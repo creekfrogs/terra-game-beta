@@ -8,12 +8,12 @@ public class EFFECT_TakeDamageEffect : InstantCharacterEffect
     [Header("Character Causing Damage")]
     public CharacterManager characterCausingDamage;
 
-        [Header("Damage")]
-        public float physicalDamage = 0; // Will be split into "Standard", "Strike", "Slash", "Pierce"
-        public float kimaDamage = 0;
-        public float fireDamage = 0;
-        public float lightningDamage = 0;
-        private int finalDamage;
+    [Header("Damage")]
+    public float physicalDamage = 0; // Will be split into "Standard", "Strike", "Slash", "Pierce"
+    public float kimaDamage = 0;
+    public float fireDamage = 0;
+    public float lightningDamage = 0;
+    private int finalDamage;
 
     [Header("Poise")]
     public float poiseDamage = 0;
@@ -46,20 +46,21 @@ public class EFFECT_TakeDamageEffect : InstantCharacterEffect
     {
         if (!character.IsOwner)
         {
-            Debug.Log("De");
             return;
         }
 
         if(characterCausingDamage != null)
         {
-            finalDamage = Mathf.RoundToInt(physicalDamage + kimaDamage + fireDamage + lightningDamage);
-
-            if(finalDamage <= 0)
-            {
-                finalDamage = 1;
-            }
-
-            character.characterNetworkManager.currentHealth.Value -= finalDamage;
+            // Check for modifiers
         }
+
+        finalDamage = Mathf.RoundToInt(physicalDamage + kimaDamage + fireDamage + lightningDamage);
+
+        if (finalDamage <= 0)
+        {
+            finalDamage = 1;
+        }
+
+        character.characterNetworkManager.currentHealth.Value -= finalDamage;
     }
 }

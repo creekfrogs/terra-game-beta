@@ -152,6 +152,13 @@ public class WorldSaveGameManager : MonoBehaviour
 
     private void NewGame()
     {
+        player.playerNetworkManager.essence.Value = 10;
+        player.playerNetworkManager.vitality.Value = 10;
+        player.playerNetworkManager.force.Value = 10;
+        player.playerNetworkManager.finesse.Value = 10;
+        player.playerNetworkManager.focus.Value = 10;
+        player.playerNetworkManager.precision.Value = 10;
+
         SaveGame();
         StartCoroutine(LoadWorld());
     }

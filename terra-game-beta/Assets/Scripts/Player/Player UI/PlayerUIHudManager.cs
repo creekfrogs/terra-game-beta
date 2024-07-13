@@ -12,9 +12,9 @@ public class PlayerUIHudManager : MonoBehaviour
         healthBar.SetStat(Mathf.RoundToInt(newValue));
     }
 
-    public void SetMaxHealthValue(int maxHealth)
+    public void SetMaxHealthValue(int maxStamina)
     {
-        healthBar.SetMaxStat(maxHealth);
+        healthBar.SetMaxStat(maxStamina);
     }
 
     public void SetNewStaminaValue(float oldValue, float newValue)
