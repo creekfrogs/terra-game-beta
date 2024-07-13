@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : CharacterManager
 {
+    [Header("DEBUG MENU")]
+    [SerializeField] bool forceKillCharacter = false;
+    [SerializeField] bool forceReviveCharacter = false;
+
     [HideInInspector] public PlayerController playerController;
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -34,6 +38,7 @@ public class PlayerManager : CharacterManager
             playerNetworkManager.currentStamina.Value -= 10f;
         }
 
+        DebugMenu();
     }
 
     protected override void LateUpdate()
@@ -41,6 +46,16 @@ public class PlayerManager : CharacterManager
         base.LateUpdate();
 
         PlayerCamera.instance.HandleAllCameraActions();
+    }
+
+    public override IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
+    {
+        if (IsOwner)
+        {
+            PlayerUIManager.instance.playerUIPopUpManager.SendDeathPopUp();
+        }
+
+        return base.ProcessDeathEvent(manuallySelectDeathAnimation);
     }
 
     public override void OnNetworkSpawn()
@@ -53,6 +68,8 @@ public class PlayerManager : CharacterManager
             PlayerInputManager.instance.player = this;
             WorldSaveGameManager.instance.player = this;
 
+            playerNetworkManager.DebugResetStats();
+
             playerNetworkManager.essence.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue;
             playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxStaminaValue;
 
@@ -60,6 +77,8 @@ public class PlayerManager : CharacterManager
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
         }
+
+        playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
     }
 
     public void SaveToCharacterData(ref CharacterSaveData currentSaveData)
@@ -103,4 +122,33 @@ public class PlayerManager : CharacterManager
         PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
     }
+
+    public override void ReviveCharacter()
+    {
+        base.ReviveCharacter();
+        if(IsOwner)
+        {
+            playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
+            playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
+
+            playerAnimatorManager.PlayTargetActionAnimation("Empty", false);
+        }
+    }
+
+    private void DebugMenu()
+    {
+        if(forceKillCharacter)
+        {
+            forceKillCharacter = false;
+            playerNetworkManager.currentHealth.Value = 0;
+        }
+
+        if(forceReviveCharacter)
+        {
+            forceReviveCharacter = false;
+            ReviveCharacter();
+        }
+    }
+
+
 }

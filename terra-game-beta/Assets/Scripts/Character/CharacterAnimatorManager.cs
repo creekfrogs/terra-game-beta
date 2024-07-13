@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class CharacterAnimatorManager : MonoBehaviour
 {
@@ -70,5 +71,16 @@ public class CharacterAnimatorManager : MonoBehaviour
             character.characterAnimator.SetFloat("horizontal", snappedHorizontal, 0.05f, Time.deltaTime);
             character.characterAnimator.SetFloat("vertical", snappedVertical, 0.05f, Time.deltaTime);
         }
+    }
+
+    public virtual void PlayTargetActionAnimation(string targetAnimation, bool isPerformingAction, bool applyRootMotion = true, bool canRotate = false, bool canMove = false)
+    {
+        character.characterAnimator.CrossFade(targetAnimation, 0.2f);
+        character.isPerformingAction = isPerformingAction;
+        character.characterAnimator.applyRootMotion = applyRootMotion;
+        character.canMove = canMove;
+        character.canRotate = canRotate;
+
+        character.characterNetworkManager.NotifyServerOfActionAnimationRpc(NetworkManager.Singleton.LocalClientId, targetAnimation, applyRootMotion);
     }
 }

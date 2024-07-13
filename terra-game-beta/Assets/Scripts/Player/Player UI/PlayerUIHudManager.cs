@@ -7,7 +7,7 @@ public class PlayerUIHudManager : MonoBehaviour
     [SerializeField] UI_StatBar healthBar;
     [SerializeField] UI_StatBar staminaBar;
 
-    public void SetNewHealthValue(float oldValue, float newValue)
+    public void SetNewHealthValue(int oldValue, int newValue)
     {
         healthBar.SetStat(Mathf.RoundToInt(newValue));
     }

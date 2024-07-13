@@ -25,6 +25,6 @@ public class CharacterSaveData
     public int precision;
 
     [Header("Resources")]
-    public float currentHealth;
+    public int currentHealth;
     public float currentStamina;
 }

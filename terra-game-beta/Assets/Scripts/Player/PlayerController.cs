@@ -75,6 +75,9 @@ public class PlayerController : CharacterController
 
     private void HandleGroundedMovement()
     {
+        if (!player.canMove)
+            return;
+
         GetAllInputs();
 
         moveDirection = PlayerCamera.instance.transform.forward * verticalMovement;
@@ -94,6 +97,9 @@ public class PlayerController : CharacterController
 
     private void HandleRotation()
     {
+        if (!player.canRotate)
+            return;
+
         Vector3 targetDirection = Vector3.zero;
         targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
         targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
