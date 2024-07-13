@@ -44,7 +44,6 @@ public class CharacterNetworkManager : NetworkBehaviour
 
     public void CheckHP(int oldValue, int newValue)
     {
-        Debug.Log("meow");
         if(currentHealth.Value <= 0)
         {
             StartCoroutine(character.ProcessDeathEvent());

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31667202436d4ae43b88e5bbc56dc1c6, type: 3}
+  m_Name: Dev Sword
+  m_EditorClassIdentifier: 
+  itemName: Dev Sword
+  itemIcon: {fileID: 21300000, guid: 8e1995ef1edf2194991c3ab62cda87d6, type: 3}
+  itemDescription: Legend states that this sword was once weilded by a valiant warrior,
+    who could alter reality. It is a sword that tells a thousand tales, of trial
+    and error.
+  itemID: 0
+  weaponModel: {fileID: 8822162905118777102, guid: 543685a7079a31942af503b53448421b,
+    type: 3}
+  physicalDamage: 18
+  kimaDamage: 0
+  fireDamage: 0
+  lightningDamage: 0
+  poiseDamage: 10
+  baseStaminaCost: 20

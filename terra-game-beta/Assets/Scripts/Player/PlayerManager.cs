@@ -13,6 +13,7 @@ public class PlayerManager : CharacterManager
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
+    [HideInInspector] public PlayerInventoryManager playerInventoryManager;
 
     protected override void Awake()
     {
@@ -21,6 +22,7 @@ public class PlayerManager : CharacterManager
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
+        playerInventoryManager = GetComponent<PlayerInventoryManager>();
     }
 
     protected override void Update()
@@ -33,11 +35,7 @@ public class PlayerManager : CharacterManager
         playerController.HandleAllMovement();
         playerStatsManager.RegenerateStamina();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            playerNetworkManager.currentStamina.Value -= 10f;
-        }
-
+        
         DebugMenu();
     }
 
@@ -72,13 +70,15 @@ public class PlayerManager : CharacterManager
 
             playerNetworkManager.essence.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue;
             playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxStaminaValue;
+            playerNetworkManager.currentHealth.Value = 1;
 
             playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
         }
 
-        playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
+        if(playerNetworkManager.currentHealth.Value <= 0)
+            playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
     }
 
     public void SaveToCharacterData(ref CharacterSaveData currentSaveData)
@@ -128,6 +128,7 @@ public class PlayerManager : CharacterManager
         base.ReviveCharacter();
         if(IsOwner)
         {
+            isDead.Value = false;
             playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
             playerNetworkManager.currentStamina.Value = playerNetworkManager.maxStamina.Value;
 

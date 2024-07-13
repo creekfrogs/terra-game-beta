@@ -54,18 +54,21 @@ public class CharacterManager : NetworkBehaviour
 
     public virtual IEnumerator ProcessDeathEvent(bool manuallySelectDeathAnimation = false)
     {
-        if(IsOwner)
+        if(characterNetworkManager.currentHealth.Value <= 0)
         {
-            characterNetworkManager.currentHealth.Value = 0;
-            isDead.Value = true;
-        }
+            if (IsOwner)
+            {
+                characterNetworkManager.currentHealth.Value = 0;
+                isDead.Value = true;
+            }
 
-        if (!manuallySelectDeathAnimation)
-        {
-            characterAnimatorManager.PlayTargetActionAnimation("humanoid_death", true);
-        }
+            if (!manuallySelectDeathAnimation)
+            {
+                characterAnimatorManager.PlayTargetActionAnimation("humanoid_death", true);
+            }
 
-        yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(5);
+        }
     }
 
     public virtual void ReviveCharacter()
