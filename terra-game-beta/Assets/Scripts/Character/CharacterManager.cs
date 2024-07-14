@@ -33,6 +33,11 @@ public class CharacterManager : NetworkBehaviour
         characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
     }
 
+    protected virtual void Start()
+    {
+        IgnoreSelfColliders();
+    }
+
     protected virtual void Update()
     {
         if (IsOwner)
@@ -74,5 +79,27 @@ public class CharacterManager : NetworkBehaviour
     public virtual void ReviveCharacter()
     {
 
+    }
+
+    protected virtual void IgnoreSelfColliders()
+    {
+        Collider locomotionCollider = GetComponent<Collider>();
+        Collider[] damageableCharacterCollider = GetComponentsInChildren<Collider>();
+        List<Collider> ignoreColliders = new List<Collider>();
+
+        foreach (var collider in damageableCharacterCollider)
+        {
+            ignoreColliders.Add(collider);
+        }
+
+        ignoreColliders.Add(locomotionCollider);
+
+        foreach (var collider in ignoreColliders)
+        {
+            foreach (var otherCollider in ignoreColliders)
+            {
+                Physics.IgnoreCollision(collider, otherCollider, true);
+            }
+        }
     }
 }

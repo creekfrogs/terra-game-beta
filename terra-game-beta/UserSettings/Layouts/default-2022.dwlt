@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1349
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Inspector
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 492}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 118
+  controlID: 145
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 18
+  controlID: 30
   draggingID: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -246,7 +246,7 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 714
-    height: 634
+    height: 616
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 17}
@@ -270,9 +270,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 634
+    y: 616
     width: 714
-    height: 665
+    height: 683
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
   m_ActualView: {fileID: 18}
@@ -1022,7 +1022,7 @@ MonoBehaviour:
     x: 1306
     y: 73
     width: 712
-    height: 613
+    height: 595
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1038,7 +1038,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 9a03ffff9e03ffffa403ffff1c04ffff2004ffff2404ffff2804ffff9a04ffff9e04ffffa204ffffa604ffffaa04ffffae04ffffd004ffffec09fffff009fffff609ffff6e0affff720affff760affff7a0affffec0afffff00afffff40afffff80afffffc0affff000bffff220bffff425affff7e5affff825afffffa5afffffe5affff025bffff065bffff5c5bffff605bffff645bffff685bffff785bffff7c5bffff805bffff845bffff885bffff8c5bffffae5bffff946fffffd06fffffd46fffff4c70ffff5070ffff5470ffff5870ffffc670ffffca70ffffce70ffffd270ffffd670ffffda70fffffc70ffff0e82ffff9a82ffff1687ffffc487ffffc887ffffcc87ffffd087ffff2288ffff2688ffff2a88ffff2e88ffff3e88ffff4288ffff4688ffff4a88ffff4e88ffff5288ffff7488ffffbeebffff3ef9ffffa6f9ffff72fafffff4ffffffc47d00001aa400001eae000088ba0000
+      m_ExpandedIDs: 18dbffff1cdbffff22dbffff9adbffff9edbffffa2dbffffa6dbffff18dcffff1cdcffff20dcffff24dcffff28dcffff2cdcffff4edcffff0efbfffff4ffffff1476000082760000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1054,7 +1054,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 10}
+        m_ClientGUIView: {fileID: 7}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -1084,9 +1084,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1306
-    y: 707
+    y: 689
     width: 712
-    height: 644
+    height: 662
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1123,9 +1123,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 7a7a0000
-    m_LastClickedID: 31354
-    m_ExpandedIDs: 00000000bc790000be790000c0790000c2790000c4790000c6790000c8790000ca790000cc790000ce790000d0790000d2790000727a0000747a00007c7a0000887a0000
+    m_SelectedIDs: fe790000
+    m_LastClickedID: 31230
+    m_ExpandedIDs: 00000000bc790000be790000c0790000c2790000c4790000c6790000c8790000ca790000cc790000ce790000d0790000d2790000d4790000d6790000d8790000fc790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1153,7 +1153,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000bc790000be790000c0790000c2790000c4790000c6790000c8790000ca790000cc790000ce790000d0790000d2790000
+    m_ExpandedIDs: 00000000bc790000be790000c0790000c2790000c4790000c6790000c8790000ca790000cc790000ce790000d0790000d2790000d4790000d6790000d8790000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1184,18 +1184,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 00730000b6cb00003ccc0000d0cb000028cc00002e87000058870000c487000080870000b08700000000000000a30000fcb90000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Weapon_DevSword
-      m_OriginalName: Weapon_DevSword
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 42108
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
@@ -1231,9 +1231,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 1306
-    y: 707
+    y: 708
     width: 712
-    height: 644
+    height: 643
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0

@@ -104,7 +104,7 @@ public class PlayerManager : CharacterManager
     {
         playerNetworkManager.characterName.Value = currentSaveData.characterName;
 
-        Vector3 currentPosition = new Vector3(currentSaveData.xPosition, currentSaveData.yPosition, currentSaveData.zPosition);
+        Vector3 currentPosition = new Vector3(currentSaveData.xPosition, currentSaveData.yPosition + 1, currentSaveData.zPosition);
         transform.position = currentPosition;
 
         playerNetworkManager.currentHealth.Value = currentSaveData.currentHealth;
