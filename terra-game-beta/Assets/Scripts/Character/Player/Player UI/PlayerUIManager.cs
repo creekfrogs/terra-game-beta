@@ -5,6 +5,8 @@ using Unity.Netcode;
 
 public class PlayerUIManager : MonoBehaviour
 {
+    [HideInInspector] public PlayerManager player;
+
     [Header("NETWORK JOIN")]
     [SerializeField] bool startGameAsClient;
 
@@ -24,6 +26,7 @@ public class PlayerUIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        player = GetComponent<PlayerManager>();
         playerUIHudManager = GetComponentInChildren<PlayerUIHudManager>();
         playerUIPopUpManager = GetComponentInChildren<PlayerUIPopUpManager>();
     }

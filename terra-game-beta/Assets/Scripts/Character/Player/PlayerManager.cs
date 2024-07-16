@@ -10,6 +10,7 @@ public class PlayerManager : CharacterManager
     [SerializeField] bool forceReviveCharacter = false;
 
     [HideInInspector] public PlayerController playerController;
+    [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
     [HideInInspector] public PlayerStatsManager playerStatsManager;
@@ -19,6 +20,7 @@ public class PlayerManager : CharacterManager
     {
         base.Awake();
         playerController = GetComponent<PlayerController>();
+        playerCombatManager = GetComponent<PlayerCombatManager>();
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
         playerStatsManager = GetComponent<PlayerStatsManager>();
@@ -65,6 +67,7 @@ public class PlayerManager : CharacterManager
             PlayerCamera.instance.player = this;
             PlayerInputManager.instance.player = this;
             WorldSaveGameManager.instance.player = this;
+            PlayerUIManager.instance.player = this;
 
             playerNetworkManager.DebugResetStats();
 
@@ -75,6 +78,8 @@ public class PlayerManager : CharacterManager
             playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
+
+            playerNetworkManager.currentWeapon.OnValueChanged += playerNetworkManager.OnCurrentWeaponIDChange;
         }
 
         if(playerNetworkManager.currentHealth.Value <= 0)

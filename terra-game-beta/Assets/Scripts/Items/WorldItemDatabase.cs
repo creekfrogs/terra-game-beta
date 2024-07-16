@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class WorldItemDatabase : MonoBehaviour
 {
@@ -29,5 +30,12 @@ public class WorldItemDatabase : MonoBehaviour
         {
             items[i].itemID = i;
         }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public WeaponItem GetWeaponByID(int ID)
+    {
+        return weapons.FirstOrDefault(weapon => weapon.itemID == ID);
     }
 }

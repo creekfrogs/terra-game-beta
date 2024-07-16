@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: Legend states that this sword was once weilded by a valiant warrior,
     who could alter reality. It is a sword that tells a thousand tales, of trial
     and error.
-  itemID: 0
+  itemID: 1
   weaponModel: {fileID: 8822162905118777102, guid: 543685a7079a31942af503b53448421b,
     type: 3}
   physicalDamage: 18
@@ -26,3 +26,4 @@ MonoBehaviour:
   lightningDamage: 0
   poiseDamage: 10
   baseStaminaCost: 20
+  oh_rb_Action: {fileID: 11400000, guid: 26cf80eb4214b78478e16d52147f6025, type: 2}

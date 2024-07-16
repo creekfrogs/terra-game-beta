@@ -29,7 +29,7 @@ public class DamageCollider : MonoBehaviour
             DamageTarget(damageTarget);
         }
     }
-    
+
     protected virtual void DamageTarget(CharacterManager damageTarget)
     {
         if (charactersDamaged.Contains(damageTarget))

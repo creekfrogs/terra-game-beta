@@ -2101,6 +2101,7 @@ GameObject:
   - component: {fileID: 102807777637870704}
   - component: {fileID: 7572602136009877481}
   - component: {fileID: 6165819821005038876}
+  - component: {fileID: -7871929308329401216}
   m_Layer: 6
   m_Name: Developer
   m_TagString: Untagged
@@ -2208,7 +2209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1926722916
+  GlobalObjectIdHash: 1675706309
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2244,6 +2245,7 @@ MonoBehaviour:
   forceKillCharacter: 0
   forceReviveCharacter: 0
   playerController: {fileID: 0}
+  playerCombatManager: {fileID: 0}
   playerAnimatorManager: {fileID: 0}
   playerNetworkManager: {fileID: 0}
   playerStatsManager: {fileID: 0}
@@ -2399,6 +2401,12 @@ MonoBehaviour:
         byte0059: 0
         byte0060: 0
         byte0061: 0
+  currentWeapon:
+    m_InternalValue: 0
+  isUsingRightHand:
+    m_InternalValue: 0
+  isUsingLeftHand:
+    m_InternalValue: 0
 --- !u!114 &7598583938741578291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2441,8 +2449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentRightHandWeapon: {fileID: 11400000, guid: 555f93498e0d93542841a7e8c878ae95,
     type: 2}
-  currentLeftHandWeapon: {fileID: 11400000, guid: 555f93498e0d93542841a7e8c878ae95,
-    type: 2}
+  currentLeftHandWeapon: {fileID: 0}
 --- !u!114 &6165819821005038876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2461,6 +2468,19 @@ MonoBehaviour:
   leftWeaponManager: {fileID: 0}
   rightHandWeaponModel: {fileID: 0}
   leftHandWeaponModel: {fileID: 0}
+--- !u!114 &-7871929308329401216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7824235032711180999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074808ab5c37c9e408c3bcbd1023297d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeapon: {fileID: 0}
 --- !u!1 &8106162223459906683
 GameObject:
   m_ObjectHideFlags: 0

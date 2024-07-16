@@ -22,6 +22,9 @@ public class PlayerInputManager : MonoBehaviour
     [HideInInspector] public float cameraHorizontalInput;
     [HideInInspector] public float cameraVerticalInput;
 
+    [Header("Player Actions")]
+    [SerializeField] bool rb_Input;
+    
     private void Awake()
     {
         if (instance == null)
@@ -54,6 +57,7 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Locomotion.Move.performed += i => movementInput = i.ReadValue<Vector2>();
         playerControls.Camera.Look.performed += i => cameraInput = i.ReadValue<Vector2>();
+        playerControls.PlayerActions.RB.performed += i => rb_Input = true;
 
         playerControls.Enable();
     }
@@ -82,6 +86,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         HandleMovementInput();
         HandleCameraMovementInput();
+        HandleRBInput();
     }
 
     private void HandleMovementInput()
@@ -108,5 +113,21 @@ public class PlayerInputManager : MonoBehaviour
     {
         cameraVerticalInput = cameraInput.y;
         cameraHorizontalInput = cameraInput.x;
+    }
+
+    private void HandleRBInput()
+    {
+        if(rb_Input)
+        {
+            rb_Input = false;
+
+            //if UI open, return
+
+            player.playerNetworkManager.SetCharacterActionHand(true);
+
+            //if two handing, run 2h action
+
+            player.playerCombatManager.PerformWeaponAction(player.playerInventoryManager.currentRightHandWeapon.oh_rb_Action, player.playerInventoryManager.currentRightHandWeapon);
+        }
     }
 }

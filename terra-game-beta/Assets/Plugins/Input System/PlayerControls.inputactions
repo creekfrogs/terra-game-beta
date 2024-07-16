@@ -124,6 +124,45 @@
             ]
         },
         {
+            "name": "Player Actions",
+            "id": "c3cd94a6-65f2-4ec2-b002-1c25f146b6b6",
+            "actions": [
+                {
+                    "name": "RB",
+                    "type": "Button",
+                    "id": "39c45099-f119-45bf-ab6a-e32c1ff26d4e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "30fbf3c4-ac42-422a-ab57-cdbb0dcb0915",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8dfb7abf-a236-48a1-a48d-e7e4a5cb5e53",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RB",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "UI",
             "id": "6a8b753e-2615-41c6-9d5e-09a9b5f50f14",
             "actions": [
