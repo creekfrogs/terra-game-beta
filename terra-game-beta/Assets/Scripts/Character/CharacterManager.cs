@@ -5,12 +5,15 @@ using Unity.Netcode;
 
 public class CharacterManager : NetworkBehaviour
 {
+    [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+    [HideInInspector] public CharacterCombatManager characterCombatManager;
+    [HideInInspector] public CharacterLocomotionManager characterLocomotionManager;
     [HideInInspector] public CharacterController characterController;
     [HideInInspector] public CharacterNetworkManager characterNetworkManager;
     [HideInInspector] public CharacterEffectsManager characterEffectsManager;
     [HideInInspector] public Rigidbody characterRigidbody;
     [HideInInspector] public Animator characterAnimator;
-    [HideInInspector] public CharacterAnimatorManager characterAnimatorManager;
+    
 
     [Header("Status")]
     public NetworkVariable<bool> isDead = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -20,17 +23,21 @@ public class CharacterManager : NetworkBehaviour
     public bool applyRootMotion = false;
     public bool canMove = true;
     public bool canRotate = true;
+    public bool isJumping = false;
+    public bool isGrounded = true;
 
     protected virtual void Awake()
     {
         DontDestroyOnLoad(this);
 
-        characterController = GetComponent<CharacterController>();
+        characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        characterCombatManager = GetComponent<CharacterCombatManager>();
+        characterLocomotionManager = GetComponent<CharacterLocomotionManager>();
         characterEffectsManager = GetComponent<CharacterEffectsManager>();
         characterNetworkManager = GetComponent<CharacterNetworkManager>();
         characterRigidbody = GetComponent<Rigidbody>();
         characterAnimator = GetComponent<Animator>();
-        characterAnimatorManager = GetComponent<CharacterAnimatorManager>();
+        
     }
 
     protected virtual void Start()
@@ -40,6 +47,7 @@ public class CharacterManager : NetworkBehaviour
 
     protected virtual void Update()
     {
+        characterAnimator.SetBool("isGrounded", isGrounded);
         if (IsOwner)
         {
             characterNetworkManager.networkPosition.Value = transform.position;

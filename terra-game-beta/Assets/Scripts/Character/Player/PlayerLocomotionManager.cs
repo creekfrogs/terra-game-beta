@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : CharacterController
+public class PlayerLocomotionManager : CharacterLocomotionManager
 {
     PlayerManager player;
-    public Rigidbody rb;
 
     [Header("Locomotion")]
     private float verticalMovement;
@@ -22,6 +21,14 @@ public class PlayerController : CharacterController
 
     [Header("Player Movement State")]
     public PlayerMoveState state;
+
+    [Header("Jump Variables")]
+    [SerializeField] float jumpStaminaCost = 25;
+    [SerializeField] float jumpHeight = 4;
+    [SerializeField] float jumpForwardSpeed = 5;
+    [SerializeField] float freeFallSpeed = 2;
+    private Vector3 jumpDirection;
+
     public enum PlayerMoveState
     {
         idle,
@@ -61,6 +68,8 @@ public class PlayerController : CharacterController
         StateMachine();
 
         HandleGroundedMovement();
+        HandleJumpMovement();
+        HandleFreeFallMovement();
         HandleRotation();
     }
 
@@ -87,11 +96,33 @@ public class PlayerController : CharacterController
 
         if (PlayerInputManager.instance.moveAmount > 0.5f)
         {
-            rb.velocity = moveDirection * runningSpeed;
+            characterController.Move(moveDirection * runningSpeed * Time.deltaTime);
         }
         else if (PlayerInputManager.instance.moveAmount <= 0.5f)
         {
-            rb.velocity = moveDirection * walkingSpeed;
+            characterController.Move(moveDirection * walkingSpeed * Time.deltaTime);
+        }
+    }
+
+    private void HandleJumpMovement()
+    {
+        if(player.isJumping)
+        {
+            characterController.Move(jumpDirection * jumpForwardSpeed * Time.deltaTime);
+        }
+    }
+
+    private void HandleFreeFallMovement()
+    {
+        if(!player.isGrounded)
+        {
+            Vector3 freeFallDirection;
+
+            freeFallDirection = PlayerCamera.instance.transform.forward * PlayerInputManager.instance.verticalInput;
+            freeFallDirection += PlayerCamera.instance.transform.right * PlayerInputManager.instance.horizontalInput;
+            freeFallDirection.y = 0;
+
+            characterController.Move(freeFallDirection * freeFallSpeed * Time.deltaTime);
         }
     }
 
@@ -135,5 +166,48 @@ public class PlayerController : CharacterController
         {
             state = PlayerMoveState.idle;
         }
+    }
+
+    public void AttemptToPerformJump()
+    {
+        if (player.isPerformingAction)
+            return;
+
+        if (player.playerNetworkManager.currentStamina.Value <= 0)
+            return;
+
+        if (player.isJumping)
+            return;
+
+        if (!player.isGrounded)
+            return;
+
+        player.playerAnimatorManager.PlayTargetActionAnimation("humanoid_jump_start", false);
+
+        player.isJumping = true;
+
+        player.playerNetworkManager.currentStamina.Value -= jumpStaminaCost;
+
+        jumpDirection = PlayerCamera.instance.cameraObject.transform.forward * PlayerInputManager.instance.verticalInput;
+        jumpDirection += PlayerCamera.instance.cameraObject.transform.right * PlayerInputManager.instance.horizontalInput;
+        jumpDirection.y = 0;
+
+        if(jumpDirection != Vector3.zero)
+        {
+            if (PlayerInputManager.instance.moveAmount > 0.5)
+            {
+                jumpDirection *= 0.5f;
+            }
+            else if (PlayerInputManager.instance.moveAmount <= 0.5)
+            {
+                jumpDirection *= 0.25f;
+            }
+        }
+
+    }
+
+    public void ApplyJumpingVelocity()
+    {
+        yVelocity.y = Mathf.Sqrt(jumpHeight * -2 * gravityForce);
     }
 }

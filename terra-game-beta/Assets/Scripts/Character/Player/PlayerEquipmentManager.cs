@@ -66,12 +66,36 @@ public class PlayerEquipmentManager : CharacterEquipmentManager
 
     public void LoadLeftWeapon()
     {
-        if (player.playerInventoryManager.currentLeftHandWeapon != null)
+        if(player.playerInventoryManager.currentLeftHandWeapon != null)
         {
             leftHandWeaponModel = Instantiate(player.playerInventoryManager.currentLeftHandWeapon.weaponModel);
             leftHandSlot.LoadWeaponModel(leftHandWeaponModel);
             leftWeaponManager = leftHandWeaponModel.GetComponent<WeaponManager>();
             leftWeaponManager.SetWeaponDamage(player, player.playerInventoryManager.currentLeftHandWeapon);
+        }
+    }
+
+    public void OpenDamageCollider()
+    {
+        if(player.playerNetworkManager.isUsingRightHand.Value)
+        {
+            rightWeaponManager.meleeDamageCollider.EnableDamageCollider();
+        }
+        else if(player.playerNetworkManager.isUsingLeftHand.Value)
+        {
+            leftWeaponManager.meleeDamageCollider.EnableDamageCollider();
+        }
+    }
+
+    public void CloseDamageCollider()
+    {
+        if (player.playerNetworkManager.isUsingRightHand.Value)
+        {
+            rightWeaponManager.meleeDamageCollider.DisableDamageCollider();
+        }
+        else if (player.playerNetworkManager.isUsingLeftHand.Value)
+        {
+            leftWeaponManager.meleeDamageCollider.DisableDamageCollider();
         }
     }
 }

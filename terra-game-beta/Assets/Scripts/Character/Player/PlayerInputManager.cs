@@ -23,6 +23,7 @@ public class PlayerInputManager : MonoBehaviour
     [HideInInspector] public float cameraVerticalInput;
 
     [Header("Player Actions")]
+    [SerializeField] bool jump_Input;
     [SerializeField] bool rb_Input;
     
     private void Awake()
@@ -57,6 +58,8 @@ public class PlayerInputManager : MonoBehaviour
 
         playerControls.Locomotion.Move.performed += i => movementInput = i.ReadValue<Vector2>();
         playerControls.Camera.Look.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+        playerControls.PlayerActions.Jump.performed += i => jump_Input = true;
         playerControls.PlayerActions.RB.performed += i => rb_Input = true;
 
         playerControls.Enable();
@@ -86,6 +89,7 @@ public class PlayerInputManager : MonoBehaviour
     {
         HandleMovementInput();
         HandleCameraMovementInput();
+        HandleJumpInput();
         HandleRBInput();
     }
 
@@ -115,6 +119,14 @@ public class PlayerInputManager : MonoBehaviour
         cameraHorizontalInput = cameraInput.x;
     }
 
+    private void HandleJumpInput()
+    {
+        if(jump_Input)
+        {
+            jump_Input = false;
+            player.playerLocomotionManager.AttemptToPerformJump();
+        }
+    }
     private void HandleRBInput()
     {
         if(rb_Input)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    MeleeWeaponDamageCollider meleeDamageCollider;
+    public MeleeWeaponDamageCollider meleeDamageCollider;
 
     private void Awake()
     {
@@ -18,5 +18,7 @@ public class WeaponManager : MonoBehaviour
         meleeDamageCollider.kimaDamage = weapon.kimaDamage;
         meleeDamageCollider.fireDamage = weapon.fireDamage;
         meleeDamageCollider.lightningDamage = weapon.lightningDamage;
+
+        meleeDamageCollider.lightAttack01Mod = weapon.lightAttack01Mod;
     }
 }

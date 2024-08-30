@@ -24,4 +24,26 @@ public class PlayerCombatManager : CharacterCombatManager
             player.playerNetworkManager.NotifyServerOfActionWeaponRpc(NetworkManager.Singleton.LocalClientId, weaponAction.actionID, weaponPerformingAction.itemID);
         }
     }
+
+    public void DrainStaminaBasedOnAttack()
+    {
+        if (!player.IsOwner)
+            return;
+
+        if (currentWeapon == null)
+            return;
+
+        float staminaDeducted = 0;
+
+        switch (currentAttackType)
+        {
+            case AttackType.LightAttack01:
+                staminaDeducted = currentWeapon.baseStaminaCost * currentWeapon.lightAttackStaminaMod;
+                break;
+            default:
+                break;
+        }
+
+        player.playerNetworkManager.currentStamina.Value -= Mathf.RoundToInt(staminaDeducted);
+    }
 }

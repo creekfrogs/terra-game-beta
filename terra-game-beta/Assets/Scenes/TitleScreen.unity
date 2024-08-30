@@ -1473,7 +1473,7 @@ GameObject:
   - component: {fileID: 954178805}
   - component: {fileID: 954178804}
   - component: {fileID: 954178803}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4391,6 +4391,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022407133466008845, guid: e4d3f6c34994e8344b7711133ca76887,
+        type: 3}
+      propertyPath: collideWithLayers.m_Bits
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 3448517283866249277, guid: e4d3f6c34994e8344b7711133ca76887,
         type: 3}

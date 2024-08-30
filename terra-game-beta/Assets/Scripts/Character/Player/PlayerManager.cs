@@ -9,7 +9,7 @@ public class PlayerManager : CharacterManager
     [SerializeField] bool forceKillCharacter = false;
     [SerializeField] bool forceReviveCharacter = false;
 
-    [HideInInspector] public PlayerController playerController;
+    [HideInInspector] public PlayerLocomotionManager playerLocomotionManager;
     [HideInInspector] public PlayerCombatManager playerCombatManager;
     [HideInInspector] public PlayerAnimatorManager playerAnimatorManager;
     [HideInInspector] public PlayerNetworkManager playerNetworkManager;
@@ -19,7 +19,7 @@ public class PlayerManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
-        playerController = GetComponent<PlayerController>();
+        playerLocomotionManager = GetComponent<PlayerLocomotionManager>();
         playerCombatManager = GetComponent<PlayerCombatManager>();
         playerAnimatorManager = GetComponent<PlayerAnimatorManager>();
         playerNetworkManager = GetComponent<PlayerNetworkManager>();
@@ -34,7 +34,7 @@ public class PlayerManager : CharacterManager
         if (!IsOwner)
             return;
 
-        playerController.HandleAllMovement();
+        playerLocomotionManager.HandleAllMovement();
         playerStatsManager.RegenerateStamina();
 
         
@@ -73,13 +73,15 @@ public class PlayerManager : CharacterManager
 
             playerNetworkManager.essence.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue;
             playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxStaminaValue;
-            playerNetworkManager.currentHealth.Value = 1;
+            //playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
 
             playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
 
             playerNetworkManager.currentWeapon.OnValueChanged += playerNetworkManager.OnCurrentWeaponIDChange;
+            Debug.Log(playerNetworkManager.currentHealth.Value);
+            Debug.Log(playerNetworkManager.maxHealth.Value);
         }
 
         if(playerNetworkManager.currentHealth.Value <= 0)

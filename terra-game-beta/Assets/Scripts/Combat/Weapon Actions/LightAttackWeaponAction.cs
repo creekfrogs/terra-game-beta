@@ -25,7 +25,7 @@ public class LightAttackWeaponAction : WeaponItemAction
     {
         if(playerPerformingAction.playerNetworkManager.isUsingRightHand.Value)
         {
-            playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(lightAttackAnimation, true);
+            playerPerformingAction.playerAnimatorManager.PlayTargetAttackActionAnimation(AttackType.LightAttack01, lightAttackAnimation, true);
         }
         if(playerPerformingAction.playerNetworkManager.isUsingLeftHand.Value)
         {
