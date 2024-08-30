@@ -31,6 +31,7 @@ public class CharacterLocomotionManager : MonoBehaviour
         {
             if(yVelocity.y < 0)
             {
+                Debug.Log("meow");
                 inAirTimer = 0;
                 fallingVelocityHasBeenSet = false;
                 yVelocity.y = groundedYVelocity;
@@ -47,9 +48,8 @@ public class CharacterLocomotionManager : MonoBehaviour
             inAirTimer = inAirTimer + Time.deltaTime;
             character.characterAnimator.SetFloat("inAirTimer", inAirTimer);
             yVelocity.y += gravityForce * Time.deltaTime;
-
-            characterController.Move(yVelocity * Time.deltaTime);
         }
+        characterController.Move(yVelocity * Time.deltaTime);
     }
 
     protected virtual void HandleGroundCheck()

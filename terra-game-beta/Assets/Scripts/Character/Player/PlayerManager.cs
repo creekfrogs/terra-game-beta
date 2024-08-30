@@ -73,15 +73,13 @@ public class PlayerManager : CharacterManager
 
             playerNetworkManager.essence.OnValueChanged += playerNetworkManager.SetNewMaxHealthValue;
             playerNetworkManager.vitality.OnValueChanged += playerNetworkManager.SetNewMaxStaminaValue;
-            //playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
+            playerNetworkManager.currentHealth.Value = playerNetworkManager.maxHealth.Value;
 
             playerNetworkManager.currentHealth.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewHealthValue;
             playerNetworkManager.currentStamina.OnValueChanged += PlayerUIManager.instance.playerUIHudManager.SetNewStaminaValue;
             playerNetworkManager.currentStamina.OnValueChanged += playerStatsManager.ResetStaminaRegenTimer;
 
             playerNetworkManager.currentWeapon.OnValueChanged += playerNetworkManager.OnCurrentWeaponIDChange;
-            Debug.Log(playerNetworkManager.currentHealth.Value);
-            Debug.Log(playerNetworkManager.maxHealth.Value);
         }
 
         if(playerNetworkManager.currentHealth.Value <= 0)

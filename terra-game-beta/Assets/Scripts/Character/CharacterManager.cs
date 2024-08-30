@@ -39,7 +39,7 @@ public class CharacterManager : NetworkBehaviour
         characterAnimator = GetComponent<Animator>();
         
     }
-
+    
     protected virtual void Start()
     {
         IgnoreSelfColliders();

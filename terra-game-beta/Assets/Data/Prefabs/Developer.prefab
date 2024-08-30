@@ -2165,7 +2165,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.870246
+  m_Height: 1.72
   m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
@@ -2245,7 +2245,7 @@ MonoBehaviour:
   gravityForce: -9.81
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1
   groundCheckSphereRadius: 0.2
   yVelocity: {x: 0, y: 0, z: 0}
   groundedYVelocity: -20
