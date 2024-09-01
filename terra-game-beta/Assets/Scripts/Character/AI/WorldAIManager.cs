@@ -8,6 +8,10 @@ public class WorldAIManager : MonoBehaviour
 {
     public static WorldAIManager instance;
 
+    [Header("DEBUG")]
+    [SerializeField] bool despawnCharacters = false;
+    [SerializeField] bool respawnCharacters = false;
+
     [Header("Characters")]
     [SerializeField] GameObject[] aiCharacters;
     [SerializeField] List<GameObject> spawnedCharacters;
@@ -32,6 +36,20 @@ public class WorldAIManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(respawnCharacters)
+        {
+            respawnCharacters = false;
+            SpawnAllCharacters();
+        }
+        if(despawnCharacters)
+        {
+            despawnCharacters = false;
+            DespawnAllCharacters();
+        }
+    }
+
     private IEnumerator SpawnAfterLoad()
     {
         while(!SceneManager.GetActiveScene().isLoaded)
@@ -49,5 +67,21 @@ public class WorldAIManager : MonoBehaviour
             instantiatedCharacter.GetComponent<NetworkObject>().Spawn();
             spawnedCharacters.Add(instantiatedCharacter);
         }
+    }
+
+    private void DespawnAllCharacters()
+    {
+        foreach(var character in spawnedCharacters)
+        {
+            character.GetComponent<NetworkObject>().Despawn();
+        }
+    }
+
+    private void DisableAllCharacters()
+    {
+        //Disable Character Gameobjects sync on network
+        //Disable gameobjects for clients upon connecting if disabled status is true
+        //Can be used to disable characters that are far from players to save memory
+        //Characters can be split into areas.
     }
 }

@@ -42,7 +42,7 @@ public class DamageCollider : MonoBehaviour
 
         charactersDamaged.Add(damageTarget);
 
-        EFFECT_TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
+        TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
         damageEffect.physicalDamage = physicalDamage;
         damageEffect.kimaDamage = kimaDamage;
         damageEffect.fireDamage = fireDamage;

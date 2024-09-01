@@ -31,7 +31,6 @@ public class CharacterLocomotionManager : MonoBehaviour
         {
             if(yVelocity.y < 0)
             {
-                Debug.Log("meow");
                 inAirTimer = 0;
                 fallingVelocityHasBeenSet = false;
                 yVelocity.y = groundedYVelocity;

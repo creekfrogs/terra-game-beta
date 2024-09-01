@@ -41,12 +41,13 @@ public class MeleeWeaponDamageCollider : DamageCollider
 
         charactersDamaged.Add(damageTarget);
 
-        EFFECT_TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
+        TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
         damageEffect.physicalDamage = physicalDamage;
         damageEffect.kimaDamage = kimaDamage;
         damageEffect.fireDamage = fireDamage;
         damageEffect.lightningDamage = fireDamage;
         damageEffect.contactPoint = contactPoint;
+        damageEffect.angleHitFrom = Vector3.SignedAngle(characterCausingDamage.transform.forward, damageTarget.transform.forward, Vector3.up);
 
         switch (characterCausingDamage.characterCombatManager.currentAttackType)
         {
@@ -57,7 +58,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
                 break;
         }
 
-        //damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
+        damageTarget.characterEffectsManager.ProcessInstantEffect(damageEffect);
 
         if(characterCausingDamage.IsOwner)
         {
@@ -77,7 +78,7 @@ public class MeleeWeaponDamageCollider : DamageCollider
         }
     }
 
-    private void ApplyAttackDamageModifiers(float modifier, EFFECT_TakeDamageEffect damage)
+    private void ApplyAttackDamageModifiers(float modifier, TakeDamageEffect damage)
     {
         damage.physicalDamage *= modifier;
         damage.kimaDamage *= modifier;

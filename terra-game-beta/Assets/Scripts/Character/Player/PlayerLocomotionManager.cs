@@ -60,7 +60,14 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
             horizontalMovement = player.characterNetworkManager.networkHorizontalMovement.Value;
             moveAmount = player.characterNetworkManager.networkMoveAmount.Value;
 
-            player.playerAnimatorManager.UpdateAnimatorMovementParams(0, moveAmount);
+            if (player.playerNetworkManager.isLockedOn.Value)
+            {
+                player.playerAnimatorManager.UpdateAnimatorMovementParams(horizontalMovement, verticalMovement);
+            }
+            else
+            {
+                player.playerAnimatorManager.UpdateAnimatorMovementParams(0, moveAmount);
+            }
         }
     }
     public void HandleAllMovement()
@@ -130,22 +137,40 @@ public class PlayerLocomotionManager : CharacterLocomotionManager
     {
         if (!player.canRotate)
             return;
+        if (player.isDead.Value)
+            return;
+        if(player.playerNetworkManager.isLockedOn.Value)
+        {
+            if (player.playerCombatManager.currentTarget == null)
+                return;
 
-        Vector3 targetDirection = Vector3.zero;
-        targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
-        targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
-        
+            Vector3 targetDirection;
+            targetDirection = player.playerCombatManager.currentTarget.transform.position - transform.position;
+            targetDirection.y = 0;
+            targetDirection.Normalize();
 
-        if (targetDirection == Vector3.zero)
-            targetDirection = transform.forward;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            Quaternion finalRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = finalRotation;
+        }
+        else
+        {
+            Vector3 targetDirection = Vector3.zero;
+            targetDirection = PlayerCamera.instance.cameraObject.transform.forward * verticalMovement;
+            targetDirection += PlayerCamera.instance.cameraObject.transform.right * horizontalMovement;
 
-        if (state == PlayerMoveState.backwards)
-            targetDirection = PlayerCamera.instance.cameraObject.transform.forward;
 
-        targetDirection.Normalize();
-        targetDirection.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            if (targetDirection == Vector3.zero)
+                targetDirection = transform.forward;
+
+            if (state == PlayerMoveState.backwards)
+                targetDirection = PlayerCamera.instance.cameraObject.transform.forward;
+
+            targetDirection.Normalize();
+            targetDirection.y = 0;
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
     }
 
     private void StateMachine()

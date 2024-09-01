@@ -19,6 +19,12 @@ public class CharacterNetworkManager : NetworkBehaviour
     public NetworkVariable<float> networkVerticalMovement = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<float> networkMoveAmount = new NetworkVariable<float>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
+    [Header("Flags")]
+    public NetworkVariable<bool> isLockedOn = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    [Header("Target")]
+    public NetworkVariable<ulong> currentTargetID = new NetworkVariable<ulong>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
     [Header("Stats")]
     public NetworkVariable<int> essence = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     public NetworkVariable<int> vitality = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
@@ -54,6 +60,22 @@ public class CharacterNetworkManager : NetworkBehaviour
             {
                 currentHealth.Value = maxHealth.Value;
             }
+        }
+    }
+
+    public void OnLockOnTargetIDChange(ulong oldId, ulong newID)
+    {
+        if(!IsOwner)
+        {
+            character.characterCombatManager.currentTarget = NetworkManager.Singleton.SpawnManager.SpawnedObjects[newID].gameObject.GetComponent<CharacterManager>();
+        }
+    }
+
+    public void OnIsLockedOnChanged(bool oldValue, bool isLockedOn)
+    {
+        if(!isLockedOn)
+        {
+            character.characterCombatManager.currentTarget = null;
         }
     }
 
@@ -172,7 +194,7 @@ public class CharacterNetworkManager : NetworkBehaviour
         CharacterManager damagedCharacter = NetworkManager.Singleton.SpawnManager.SpawnedObjects[damagedCharacterID].gameObject.GetComponent<CharacterManager>();
         CharacterManager characterCausingDamage = NetworkManager.Singleton.SpawnManager.SpawnedObjects[characterCausingDamageID].gameObject.GetComponent<CharacterManager>();
 
-        EFFECT_TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
+        TakeDamageEffect damageEffect = Instantiate(WorldCharacterEffectsManager.instance.takeDamageEffect);
 
         damageEffect.physicalDamage = physicalDamage;
         damageEffect.kimaDamage = kimaDamage;

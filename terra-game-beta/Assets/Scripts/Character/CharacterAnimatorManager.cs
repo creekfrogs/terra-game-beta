@@ -10,6 +10,12 @@ public class CharacterAnimatorManager : MonoBehaviour
     float vertical;
     float horizontal;
 
+    [Header("Damage Animations")]
+    public string hit_Forward = "huminoid_hitF";
+    public string hit_Backward = "huminoid_hitB";
+    public string hit_Left = "huminoid_hitL";
+    public string hit_Right = "huminoid_hitR";
+
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
@@ -75,6 +81,7 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public virtual void PlayTargetActionAnimation(string targetAnimation, bool isPerformingAction, bool applyRootMotion = true, bool canRotate = false, bool canMove = false)
     {
+        Debug.Log("PLAYING ANIMATION: " + targetAnimation);
         character.characterAnimator.CrossFade(targetAnimation, 0.2f);
         character.isPerformingAction = isPerformingAction;
         character.characterAnimator.applyRootMotion = applyRootMotion;

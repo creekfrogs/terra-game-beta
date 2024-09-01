@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
 public class PlayerManager : CharacterManager
 {
@@ -61,6 +62,12 @@ public class PlayerManager : CharacterManager
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+
+        playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
+
+        playerNetworkManager.isLockedOn.OnValueChanged += playerNetworkManager.OnIsLockedOnChanged;
+        playerNetworkManager.currentTargetID.OnValueChanged += playerNetworkManager.OnLockOnTargetIDChange;
 
         if (IsOwner)
         {
@@ -84,6 +91,22 @@ public class PlayerManager : CharacterManager
 
         if(playerNetworkManager.currentHealth.Value <= 0)
             playerNetworkManager.currentHealth.OnValueChanged += playerNetworkManager.CheckHP;
+    }
+
+    private void OnClientConnectedCallback(ulong clientID)
+    {
+        GameSessionManager.instance.AddPlayerToActivePlayers(this);
+
+        if(!IsServer && IsOwner)
+        {
+            foreach (var player in GameSessionManager.instance.players)
+            {
+                if(player != this)
+                {
+                    player.LoadOtherPlayersOnJoin();
+                }
+            }
+        }
     }
 
     public void SaveToCharacterData(ref CharacterSaveData currentSaveData)
@@ -126,6 +149,16 @@ public class PlayerManager : CharacterManager
         playerNetworkManager.maxStamina.Value = playerStatsManager.CalculateStaminaBasedOnLvl(currentSaveData.vitality);
         PlayerUIManager.instance.playerUIHudManager.SetMaxHealthValue(playerNetworkManager.maxHealth.Value);
         PlayerUIManager.instance.playerUIHudManager.SetMaxStaminaValue(playerNetworkManager.maxStamina.Value);
+    }
+
+    public void LoadOtherPlayersOnJoin()
+    {
+        playerNetworkManager.OnCurrentWeaponIDChange(0, playerNetworkManager.currentWeapon.Value);
+
+        if(playerNetworkManager.isLockedOn.Value)
+        {
+            playerNetworkManager.OnLockOnTargetIDChange(0, playerNetworkManager.currentTargetID.Value);
+        }
     }
 
     public override void ReviveCharacter()
